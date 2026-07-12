@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2025.1 (64-bit)
+# SW Build 6140274 on Wed May 21 22:58:25 MDT 2025
+# IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
+# SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
+# Start of session at: Fri Jun 26 16:55:49 2026
+# Process ID         : 71129
+# Current directory  : /nfs/home/b/b_orchar/Documents/COEN313/Project/Vivado/project_1/project_1.runs/synth_1
+# Command line       : vivado -log three_k_plus_one.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source three_k_plus_one.tcl
+# Log file           : /nfs/home/b/b_orchar/Documents/COEN313/Project/Vivado/project_1/project_1.runs/synth_1/three_k_plus_one.vds
+# Journal file       : /nfs/home/b/b_orchar/Documents/COEN313/Project/Vivado/project_1/project_1.runs/synth_1/vivado.jou
+# Running On         : jerne.encs.concordia.ca
+# Platform           : unknown
+# Operating System   : unknown
+# Processor Detail   : Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz
+# CPU Frequency      : 4693.622 MHz
+# CPU Physical cores : 8
+# CPU Logical cores  : 16
+# Host memory        : 16497 MB
+# Swap memory        : 10485 MB
+# Total Virtual      : 26982 MB
+# Available Virtual  : 22154 MB
+#-----------------------------------------------------------
+source three_k_plus_one.tcl -notrace
