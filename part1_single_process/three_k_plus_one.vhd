@@ -1,8 +1,22 @@
+--------------------------------------------------------------------------------
+-- Project : 3k+1 (Collatz) sequence generator -- COEN 313
+-- File    : three_k_plus_one.vhd
+-- Author  : Bryce Orchard
+-- Target  : Digilent Nexys A7 (Artix-7), 100 MHz on-board clock
+--
+-- Finds the smallest positive integer whose 3k+1 sequence has >= 9 terms
+-- (answer: 6). This variant implements the algorithm in a SINGLE clocked
+-- process using variables, plus a time-multiplexed 7-segment display driver.
+--
+-- Related files:
+--   three_k_plus_one_sim.vhd  -- simulation-only variant (display removed)
+--   ../part2_asm_fsm/three_k_plus_one_asm.vhd  -- ASM-chart / FSM+datapath version
+--------------------------------------------------------------------------------
 library IEEE;
 use ieee.numeric_std.all;
 use IEEE.std_logic_1164.all;
 
-entity three_k_plus_one is 
+entity three_k_plus_one is
     port(reset : in std_logic; -- asynchronous
          clk_in : in std_logic; -- the 100MHz FPGA board clock
          an: out std_logic_vector(7 downto 0 ); -- the 8 anodes of each -- 7-seg display
@@ -26,9 +40,13 @@ signal sel : std_logic_vector(1 downto 0);
 signal hex : std_logic_vector(3 downto 0);
 
 begin
+    -- number, term and length are VARIABLES (not signals) so that an updated value
+    -- is visible immediately within the same clock cycle -- e.g. the incremented
+    -- number can be loaded straight into term. This mirrors the sequential C++
+    -- reference; signals would instead lag by one clock cycle.
     LOGIC : process(clk_in, reset)
-        variable number, length : unsigned(3 downto 0) := "0001"; -- use 4 bits for the possible integers (we expect a max of 6)
-        variable term : unsigned(6 downto 0) := "0000001"; -- use 7 bits for the terms of the sequence
+        variable number, length : unsigned(3 downto 0) := "0001"; -- 4 bits for the integers under test (max 6)
+        variable term : unsigned(6 downto 0) := "0000001"; -- 7 bits for the terms of the sequence (max 16)
     begin
         if reset = '1' then
             number := "0001";

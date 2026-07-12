@@ -40,7 +40,7 @@ The same algorithm is realized two ways, both matching the identical entity/pin 
 | ---------- | -------------------------------------------------- | ------------------------------------------------------------------------- |
 | **Style**  | One algorithmic clocked process using **variables** | Moore-style **control unit** (FSM) driving separate **datapath** register processes |
 | **Focus**  | Compact, algorithmic RTL                           | Textbook control-unit / datapath methodology                              |
-| **File**   | `Part 1/three_k_plus_one.vhd`                      | `Part 2/three_k_plus_one_p2.vhd`                                          |
+| **File**   | `part1_single_process/three_k_plus_one.vhd`        | `part2_asm_fsm/three_k_plus_one_asm.vhd`                                  |
 
 Both compute the same result and share the same time-multiplexed 7-segment display driver. Building the
 design twice demonstrates that a high-level algorithmic description and an explicit ASM-chart state machine
@@ -88,13 +88,13 @@ is asserted, the registers hold their final values (`number = 6`) until the rese
 ```text
 .
 ├── 3k.xdc                          # Nexys A7 pin constraints (shared by both parts)
-├── Part 1/                         # Single clocked-process implementation
+├── part1_single_process/           # Single clocked-process implementation
 │   ├── three_k_plus_one.vhd        #   synthesizable design (algorithm + 7-seg driver)
 │   ├── three_k_plus_one_sim.vhd    #   simulation variant (display removed, length exposed)
 │   ├── part1.do                    #   ModelSim simulation macro
 │   └── Figures/                    #   elaborated/implemented schematics, waveforms
-├── Part 2/                         # ASM chart: FSM control unit + datapath
-│   ├── three_k_plus_one_p2.vhd     #   synthesizable design
+├── part2_asm_fsm/                  # ASM chart: FSM control unit + datapath
+│   ├── three_k_plus_one_asm.vhd    #   synthesizable design
 │   ├── part2.do                    #   ModelSim simulation macro
 │   └── Figures/                    #   ASM chart, block diagram, waveforms
 ├── Project Report.pdf              # Full write-up: code, ASM chart, sim & synthesis results

@@ -1,8 +1,23 @@
+--------------------------------------------------------------------------------
+-- Project : 3k+1 (Collatz) sequence generator -- COEN 313
+-- File    : three_k_plus_one_asm.vhd
+-- Author  : Bryce Orchard
+-- Target  : Digilent Nexys A7 (Artix-7), 100 MHz on-board clock
+--
+-- Finds the smallest positive integer whose 3k+1 sequence has >= 9 terms
+-- (answer: 6). Same task as three_k_plus_one.vhd, but built with the ASM-chart
+-- methodology: a Moore-style CONTROL UNIT (state machine) emits control signals
+-- that drive independent DATAPATH register processes (number, term, length,
+-- done). A time-multiplexed 7-segment display driver is shared with Part 1.
+--
+-- Related file:
+--   ../part1_single_process/three_k_plus_one.vhd  -- single-process version
+--------------------------------------------------------------------------------
 library IEEE;
 use ieee.numeric_std.all;
 use IEEE.std_logic_1164.all;
 
-entity three_k_plus_one is 
+entity three_k_plus_one is
     port(reset : in std_logic; -- asynchronous
          clk_in : in std_logic; -- the 100MHz FPGA board clock
          an: out std_logic_vector(7 downto 0 ); -- the 8 anodes of each -- 7-seg display
@@ -75,6 +90,9 @@ begin
         end if;
     end process LOGIC;
 
+    -- Moore outputs: control signals depend only on the current state. Every
+    -- signal is defaulted to '0' first so each state only sets the signals it
+    -- asserts; this also guarantees combinational logic (no inferred latches).
     OUTPUTS : process(state) -- non registered outputs
     begin
         reset_number  <= '0'; inc_number <= '0';
@@ -186,7 +204,7 @@ begin
 
     -- hex-to-7-segment LED decoding
     with hex select
-        sseg <=
+        sseg <= -- sseg format is [a, b, c, d, e, f, g, dp]
             "00000011" when "0000",   -- 0
             "10011111" when "0001",   -- 1
             "00100101" when "0010",   -- 2

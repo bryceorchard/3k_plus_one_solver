@@ -1,11 +1,25 @@
+--------------------------------------------------------------------------------
+-- Project : 3k+1 (Collatz) sequence generator -- COEN 313
+-- File    : three_k_plus_one_sim.vhd
+-- Author  : Bryce Orchard
+-- Target  : ModelSim simulation only (NOT for synthesis)
+--
+-- Simulation-only variant of three_k_plus_one.vhd. The 7-segment display driver
+-- and the an/sseg ports are removed to keep the waveform focused on the
+-- algorithm, and an extra 'length_out' signal is exposed so the term count is
+-- visible in the wave window.
+--
+-- Because 'length' is never read by any logic, ModelSim optimizes it away unless
+-- vsim is run with -voptargs="+acc". Drive with part1.do.
+--------------------------------------------------------------------------------
 library IEEE;
 use ieee.numeric_std.all;
 use IEEE.std_logic_1164.all;
 
-entity three_k_plus_one is 
+entity three_k_plus_one is
     port(reset : in std_logic; -- asynchronous
          clk_in : in std_logic; -- the 100MHz FPGA board clock
-         done_out : out std_logic); 
+         done_out : out std_logic);
 end three_k_plus_one;
 
 architecture structural of three_k_plus_one is
