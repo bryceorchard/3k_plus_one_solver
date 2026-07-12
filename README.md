@@ -25,9 +25,9 @@ if k is odd:   k = 3k + 1
 k = 6:  6 → 3 → 10 → 5 → 16 → 8 → 4 → 2 → 1     (9 terms)
 ```
 
-This project solves a bounded version of the problem in hardware: **find the smallest integer whose
-sequence has ≥ 9 terms.** The design walks the integers in order, generates each one's full sequence,
-and halts on the first that qualifies — **the answer is 6** — asserting a `done` signal and holding the
+This project solves a bounded version of the problem in hardware: find the smallest integer whose
+sequence has ≥ 9 terms. The design walks the integers in order, generates each one's full sequence,
+and halts on the first that has a length of 9, then asserting a `done` signal and holding the
 result until reset.
 
 ---
@@ -36,15 +36,13 @@ result until reset.
 
 The same algorithm is realized two ways, both matching the identical entity/pin specification:
 
-|           | `part 1` — Single clocked process                   | `part 2` — ASM chart (FSM + datapath)                                               |
-| --------- | --------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| **Style** | One algorithmic clocked process using **variables** | Moore-style **control unit** (FSM) driving separate **datapath** register processes |
-| **Focus** | Compact, algorithmic RTL                            | Textbook control-unit / datapath methodology                                        |
-| **File**  | `part1_single_process/three_k_plus_one.vhd`         | `part2_asm_fsm/three_k_plus_one_asm.vhd`                                            |
+|           | `part 1` - Single clocked process                   | `part 2` - ASM chart (FSM + datapath)                                       |
+| --------- | --------------------------------------------------- | --------------------------------------------------------------------------- |
+| **Style** | One algorithmic clocked process using **variables** | Moore-style control unit (FSM) driving separate datapath register processes |
+| **Focus** | Compact, algorithmic RTL                            | Textbook control-unit / datapath methodology                                |
+| **File**  | `part1_single_process/three_k_plus_one.vhd`         | `part2_asm_fsm/three_k_plus_one_asm.vhd`                                    |
 
-Both compute the same result and share the same time-multiplexed 7-segment display driver. Building the
-design twice demonstrates that a high-level algorithmic description and an explicit ASM-chart state machine
-can be made behaviorally equivalent — a core lesson in RTL design.
+Both compute the same result and share the same time-multiplexed 7-segment display driver.
 
 ---
 
@@ -69,12 +67,9 @@ is asserted, the registers hold their final values (`number = 6`) until the rese
 ## Design highlights
 
 - **Variables vs. signals.** In the single-process version, `number`, `term`, and `length` are VHDL
-  *variables* so that an incremented value can be consumed in the *same* clock cycle — mirroring the
-  sequential semantics of the reference C++. Using signals would insert a one-cycle delay, changing the
-  behavior. This subtlety is called out in the code and the report.
+  *variables* so that an incremented value can be consumed in the *same* clock cycle. Using signals would insert a one-cycle delay, changing the behavior.
 - **Synthesis-friendly arithmetic.** Division by 2 is implemented as a right shift (`shift_right`), and
-  the `3*term` multiply uses `resize(...)` to keep the product within the declared register width — both
-  chosen because unrestricted `/` and unsized `*` are not (or not efficiently) synthesizable.
+  the `3*term` multiply uses `resize(...)` to keep the product within the declared register width. Both were chosen because unrestricted `/` and unsized `*` are not (or not efficiently) synthesizable.
 - **Time-multiplexed 7-segment driver.** A 20-bit counter divides the 100 MHz clock to cycle through the
   digits at a ~90 Hz refresh rate (`N = log₂(100 MHz / 90 Hz) ≈ 20`), fast enough to appear continuous to
   the eye. The two most-significant counter bits select which digit is driven.
@@ -151,4 +146,4 @@ datapath block diagram, and RTL component (register/adder/mux) statistics.
 
 ## Author
 
-**Bryce Orchard** — Concordia University, COEN 313 (Summer 2026).
+**Bryce Orchard** - Concordia University, COEN 313 (Summer 2026).
