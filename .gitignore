@@ -1,1 +1,19 @@
+# macOS
 .DS_Store
+
+# Vivado project / build artifacts
+*.cache/
+*.hw/
+*.runs/
+*.sim/
+*.ip_user_files/
+*.gen/
+.Xil/
+*.jou
+*.log
+*.str
+*.dcp
+*.bit
+*.ltx
+*.vdi
+*.vds
