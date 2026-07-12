@@ -36,11 +36,11 @@ result until reset.
 
 The same algorithm is realized two ways, both matching the identical entity/pin specification:
 
-|            | `part 1` — Single clocked process                  | `part 2` — ASM chart (FSM + datapath)                                     |
-| ---------- | -------------------------------------------------- | ------------------------------------------------------------------------- |
-| **Style**  | One algorithmic clocked process using **variables** | Moore-style **control unit** (FSM) driving separate **datapath** register processes |
-| **Focus**  | Compact, algorithmic RTL                           | Textbook control-unit / datapath methodology                              |
-| **File**   | `part1_single_process/three_k_plus_one.vhd`        | `part2_asm_fsm/three_k_plus_one_asm.vhd`                                  |
+|           | `part 1` — Single clocked process                   | `part 2` — ASM chart (FSM + datapath)                                               |
+| --------- | --------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **Style** | One algorithmic clocked process using **variables** | Moore-style **control unit** (FSM) driving separate **datapath** register processes |
+| **Focus** | Compact, algorithmic RTL                            | Textbook control-unit / datapath methodology                                        |
+| **File**  | `part1_single_process/three_k_plus_one.vhd`         | `part2_asm_fsm/three_k_plus_one_asm.vhd`                                            |
 
 Both compute the same result and share the same time-multiplexed 7-segment display driver. Building the
 design twice demonstrates that a high-level algorithmic description and an explicit ASM-chart state machine
